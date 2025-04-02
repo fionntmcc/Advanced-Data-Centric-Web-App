@@ -11,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import com.example.demo.validations.VehiclePOSTValidation;
 
@@ -27,6 +28,7 @@ public class Vehicle {
 	@JsonView(VehicleViews.Public.class)
 	@Column(unique = true)
 	private String reg;
+	
 	
 	@NotNull(message = "make must be provided", 
 			groups = VehiclePOSTValidation.class)
