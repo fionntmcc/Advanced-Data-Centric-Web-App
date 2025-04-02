@@ -1,6 +1,7 @@
 package com.example.demo.models;
 
 import com.example.demo.views.VehicleViews;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -11,8 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
-
+import com.example.demo.validations.VehiclePOSTValidation;
 
 @Entity
 public class Vehicle {
@@ -22,21 +22,29 @@ public class Vehicle {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	@NotNull(message = "reg must be provided", 
+			groups = VehiclePOSTValidation.class)
 	@JsonView(VehicleViews.Public.class)
 	@Column(unique = true)
 	private String reg;
 	
+	@NotNull(message = "make must be provided", 
+			groups = VehiclePOSTValidation.class)
 	@JsonView(VehicleViews.Public.class)
 	private String make;
 	
+	@NotNull(message = "model must be provided", 
+			groups = VehiclePOSTValidation.class)
 	@JsonView(VehicleViews.Public.class)
 	private String model;
 	
+	@JsonIgnore
 	@JsonView(VehicleViews.Public.class)
 	@ManyToOne
 	@JsonManagedReference("vehicle-owner")
 	private Customer owner;
-	 
+	
+	@JsonIgnore
 	@JsonView(VehicleViews.Public.class)
 	@ManyToOne
 	@JsonManagedReference("vehicle-mechanic")
