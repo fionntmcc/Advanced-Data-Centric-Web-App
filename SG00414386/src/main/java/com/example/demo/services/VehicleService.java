@@ -39,6 +39,11 @@ public class VehicleService {
         return vr.findByMake(make);
     }
     
+    @JsonView(VehicleViews.Public.class) // Returns JsonView objects.
+    public List<Vehicle> getVehiclesByMid(String mid) {
+        return vr.findByMid(mid);
+    }
+    
     public void save(Vehicle v) throws VehicleException { // Save vehicle to database.
     	 try {
     	 vr.save(v);
