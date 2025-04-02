@@ -19,5 +19,5 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Integer> {
     Optional<Vehicle> findByReg(String reg);
     
     @EntityGraph(attributePaths = {"owner", "mechanic", "mechanic.garage"})
-    List<Vehicle> findByMid(String mid);
+    List<Vehicle> findByMechanicId(int mechanic);
 }

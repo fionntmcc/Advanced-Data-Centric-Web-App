@@ -20,11 +20,11 @@ public class Customer {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@JsonView(VehicleViews.Public.class)
+	@JsonView(VehicleViews.ExtendedPublic.class)
 	@Column(unique = true)
 	private String cid;
 	
-	@JsonView(VehicleViews.Public.class)
+	@JsonView(VehicleViews.ExtendedPublic.class)
 	private String name;
 	
 	private String phone;

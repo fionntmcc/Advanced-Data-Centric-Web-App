@@ -26,7 +26,7 @@ public class VehicleService {
     @Autowired
     private MechanicRepository mr;
     
-    @JsonView(VehicleViews.Public.class) // Use JsonView for returning vehicle objects.
+    @JsonView(VehicleViews.ExtendedPublic.class) // Use JsonView for returning vehicle objects.
     									 // This only returns the fields marked with the @JsonView annotation.
     									 // @JsonIgnore is used to avoid recursion (i.e. Vehicle -> Customer -> Mechanic
     									 // -> Garage -> Mechanic...)
@@ -34,14 +34,15 @@ public class VehicleService {
         return vr.findAll();
     }
     
-    @JsonView(VehicleViews.Public.class) // Returns JsonView objects.
+    @JsonView(VehicleViews.ExtendedPublic.class) // Returns JsonView objects.
     public List<Vehicle> getVehiclesByMake(String make) {
         return vr.findByMake(make);
     }
     
     @JsonView(VehicleViews.Public.class) // Returns JsonView objects.
-    public List<Vehicle> getVehiclesByMid(String mid) {
-        return vr.findByMid(mid);
+    public List<Vehicle> getVehiclesByMechanicId(String mechanic) {
+        return vr.findByMechanicId(Integer.parseInt(mechanic.substring(1))); // Remove 'M' from the start of mechanic id and parse to Integer.
+        																	 // Matches mechanic table to vehicle table.
     }
     
     public void save(Vehicle v) throws VehicleException { // Save vehicle to database.
@@ -52,7 +53,7 @@ public class VehicleService {
     	 }
     }
     
-    @Transactional // PUT code is atomic. All or nothing.
+    @Transactional // PUT method is atomic. All or nothing.
     public Vehicle updateMechanic(String reg, String mid) { // For POST method: Update mechanic associated with car reg.
         Vehicle vehicle = vr.findByReg(reg)
             .orElseThrow(() -> new VehicleNotFoundException("Vehicle not found")); // Error handling.

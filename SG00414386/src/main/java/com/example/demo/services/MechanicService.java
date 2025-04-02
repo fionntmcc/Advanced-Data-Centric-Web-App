@@ -30,7 +30,7 @@ public class MechanicService {
             .orElseThrow(() -> new MechanicNotFoundException("Mechanic with mid " + mid + " not found"));
 
         // Check if mechanic is associated with any vehicles
-        List<Vehicle> vehicles = vr.findByMid(mid);
+        List<Vehicle> vehicles = vr.findByMechanicId(Integer.parseInt(mid.substring(1)));
         if (!vehicles.isEmpty()) {
             throw new MechanicInServiceException("Mechanic is currently servicing " + vehicles.size() + " vehicles");
         }

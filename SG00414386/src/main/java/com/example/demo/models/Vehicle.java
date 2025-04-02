@@ -1,7 +1,6 @@
 package com.example.demo.models;
 
 import com.example.demo.views.VehicleViews;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.Column;
@@ -38,13 +37,11 @@ public class Vehicle {
 	@JsonView(VehicleViews.Public.class)
 	private String model;
 	
-	@JsonIgnore
-	@JsonView(VehicleViews.Public.class)
+	@JsonView(VehicleViews.ExtendedPublic.class)
 	@ManyToOne
 	@JsonManagedReference("vehicle-owner")
 	private Customer owner;
 	
-	@JsonIgnore
 	@JsonView(VehicleViews.Public.class)
 	@ManyToOne
 	@JsonManagedReference("vehicle-mechanic")

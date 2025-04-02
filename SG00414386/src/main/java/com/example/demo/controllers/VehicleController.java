@@ -38,14 +38,14 @@ public class VehicleController {
     @Autowired
     VehicleService vs;
     
-    @GetMapping("/all") // GET "/api.vehicle/all"
-    @JsonView(VehicleViews.Public.class)
+    @GetMapping("/all") // GET "/api/vehicle/all"
+    @JsonView(VehicleViews.ExtendedPublic.class)
     public Iterable<Vehicle> getAllVehicles() {
         return vs.getAllVehicles(); // Call service to return JSON list.
     }
     
     @GetMapping // GET "/api/vehicle?make=<carMake>"
-    @JsonView(VehicleViews.Public.class)
+    @JsonView(VehicleViews.ExtendedPublic.class)
     public List<Vehicle> getVehiclesByMake(@RequestParam String make) {
         return vs.getVehiclesByMake(make); // Call service to return JSON list.
     }
@@ -68,6 +68,7 @@ public class VehicleController {
     }
     
     @PutMapping("/{reg}")
+    @JsonView(VehicleViews.Public.class)
     public ResponseEntity<?> updateVehicleMechanic(
         @PathVariable String reg,
         @RequestBody Map<String, Object> requestBody) {  // Use Map to inspect raw JSON

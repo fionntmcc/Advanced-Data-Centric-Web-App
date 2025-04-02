@@ -20,14 +20,14 @@ public class Garage {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@JsonView(VehicleViews.Public.class)
+	@JsonView(VehicleViews.ExtendedPublic.class)
 	@Column(unique = true)
 	private String gid;
 	
-	@JsonView(VehicleViews.Public.class)
+	@JsonView(VehicleViews.ExtendedPublic.class)
 	private String location;
 	
-	@JsonView(VehicleViews.Public.class)
+	@JsonView(VehicleViews.ExtendedPublic.class)
 	private int budget;
 	
 	@OneToMany(mappedBy = "garage")

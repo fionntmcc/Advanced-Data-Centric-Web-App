@@ -23,19 +23,19 @@ public class Mechanic {
 	@Column(unique = true)
 	private String mid;
 	
-	@JsonView(VehicleViews.Public.class)
+	@JsonView(VehicleViews.ExtendedPublic.class)
 	private String name;
 	
-	@JsonView(VehicleViews.Public.class)
+	@JsonView(VehicleViews.ExtendedPublic.class)
 	private Double salary;
 	
-	@JsonView(VehicleViews.Public.class)
+	@JsonView(VehicleViews.ExtendedPublic.class)
 	@ManyToOne
 	private Garage garage;
 	
 	@OneToMany(mappedBy = "mechanic")
 	@JsonBackReference("vehicle-mechanic")
-	private List<Vehicle> vehicles;// = new ArrayList<Vehicle>();
+	private List<Vehicle> vehicles;
 	
 	public Mechanic() {
 		super();
