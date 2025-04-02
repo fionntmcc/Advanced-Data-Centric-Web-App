@@ -32,7 +32,7 @@ public class VehicleService {
     	 try {
     	 vr.save(v);
     	 } catch (DataIntegrityViolationException ex) {
-    	 throw new VehicleException("Vehicle " + v.getId() + " already exists");
+    	 throw new VehicleException("Vehicle " + v.getReg() + " already exists");
     	 }
     }
 }

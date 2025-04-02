@@ -44,11 +44,12 @@ public class VehicleController {
     
     @Validated(VehiclePOSTValidation.class)
     @PostMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void addEmployee(@Valid @RequestBody Vehicle v) {
+    public Vehicle addEmployee(@Valid @RequestBody Vehicle v) {
     	try {
     		vs.save(v);
     	} catch (VehicleException vx) {
     		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, vx.getMessage());
     	}
+    	return v;
     }
 }

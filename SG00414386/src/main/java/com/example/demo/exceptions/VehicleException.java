@@ -1,11 +1,15 @@
 package com.example.demo.exceptions;
 
 public class VehicleException extends Exception{
-	public VehicleException(String s) {
-		super(s);
+	
+	private String message;
+	
+	public VehicleException(String message) {
+		super(message);
+		this.message = message;
 	}
 	
 	public String getMessage() {
-		return "Error in posting vehicle";
+		return message;
 	}
 }
