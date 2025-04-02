@@ -24,36 +24,35 @@ import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/vehicle")
-@Validated(VehiclePOSTValidation.class) // Move to class level
+@RequestMapping("/api/vehicle") // API endpoint.
+@Validated(VehiclePOSTValidation.class) // Class-level validation.
 public class VehicleController {
     
     @Autowired
     VehicleService vs;
     
-    @GetMapping("/all")
+    @GetMapping("/all") // GET "/api.vehicle/all"
     @JsonView(VehicleViews.Public.class)
     public Iterable<Vehicle> getAllVehicles() {
-        return vs.getAllVehicles();
+        return vs.getAllVehicles(); // Call service to return JSON list.
     }
     
-    @GetMapping
+    @GetMapping // GET "/api/vehicle?make=<carMake>"
     @JsonView(VehicleViews.Public.class)
     public List<Vehicle> getVehiclesByMake(@RequestParam String make) {
-        return vs.getVehiclesByMake(make);
+        return vs.getVehiclesByMake(make); // Call service to return JSON list.
     }
     
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Vehicle addVehicle(@Valid @RequestBody Vehicle v) {
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE) // POST "/api/vehicle"
+    public Vehicle addVehicle(@Valid @RequestBody Vehicle v) { // Get vehicle from request body.
         try {
-            // Validation happens automatically before this line
+            // Validation happens automatically here.
             vs.save(v);
             return v;
-        } catch (VehicleException vx) {
-            // Handle business logic errors (e.g., duplicate reg)
+        } catch (VehicleException vx) { // Handle duplicate reg or missing field.
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, vx.getMessage());
         } catch (Exception e) {
-            // Catch validation failures (throws 500)
+            // Catch validation failures.
             throw new ResponseStatusException(
                 HttpStatus.INTERNAL_SERVER_ERROR, 
                 "Validation failed: " + e.getMessage()

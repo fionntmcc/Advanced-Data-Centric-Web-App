@@ -16,14 +16,17 @@ import com.fasterxml.jackson.annotation.JsonView;
 public class VehicleService {
     
     @Autowired
-    private VehicleRepository vr;
+    private VehicleRepository vr; // Get repository for CRUD operations.
     
-    @JsonView(VehicleViews.Public.class)
+    @JsonView(VehicleViews.Public.class) // Use JsonView for returning vehicle objects.
+    									 // This only returns the fields marked with the @JsonView annotation.
+    									 // @JsonIgnore is used to avoid recursion (i.e. Vehicle -> Customer -> Mechanic
+    									 // -> Garage -> Mechanic...)
     public Iterable<Vehicle> getAllVehicles() {
         return vr.findAll();
     }
     
-    @JsonView(VehicleViews.Public.class)
+    @JsonView(VehicleViews.Public.class) // Returns JsonView objects.
     public List<Vehicle> getVehiclesByMake(String make) {
         return vr.findByMake(make);
     }
@@ -32,7 +35,7 @@ public class VehicleService {
     	 try {
     	 vr.save(v);
     	 } catch (DataIntegrityViolationException ex) {
-    	 throw new VehicleException("Vehicle " + v.getReg() + " already exists");
+    	 throw new VehicleException("Vehicle " + v.getReg() + " already exists"); // For correct HttpResponseStatus and Message.
     	 }
     }
 }
