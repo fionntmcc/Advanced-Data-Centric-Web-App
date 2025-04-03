@@ -15,7 +15,7 @@ export interface Vehicle {
 export interface Mechanic {
   mid: string;
   name: string;
-  salary: number;
+  salary: number; 
   garage: Garage;
 }
 

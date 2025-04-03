@@ -1,7 +1,11 @@
 <div class="vehicles-container">
-  <h2>Vehicle Inventory</h2>
-  
+  <h2>Vehicles</h2>
+
   <div class="table-responsive">
+
+    @if (vehicles.length === 0) {
+    <div>No vehicles available</div>
+    } @else {
     <table class="vehicles-table">
       <thead>
         <tr>
@@ -14,18 +18,22 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngIf="vehicles.length === 0">
-          <td colspan="6" class="no-data">No vehicles found</td>
-        </tr>
-        <tr *ngFor="let vehicle of vehicles">
+        @for (vehicle of vehicles; track vehicle.reg) {
+        <tr>
           <td>{{ vehicle.reg }}</td>
           <td>{{ vehicle.make }}</td>
           <td>{{ vehicle.model }}</td>
           <td>{{ vehicle.owner.cid }}, {{ vehicle.owner.name }}</td>
-          <td>{{ vehicle.mechanic.mid}}, {{ vehicle.mechanic.name }}, {{ vehicle.mechanic.salary }}, {{ vehicle.mechanic.garage.gid }}, {{ vehicle.mechanic.garage.location }} </td>
-          <td></td>
+          <td>{{ vehicle.mechanic.mid}}, {{ vehicle.mechanic.name }}, {{ vehicle.mechanic.salary }}, {{
+            vehicle.mechanic.garage.gid }}, {{ vehicle.mechanic.garage.location }} </td>
+          <td>
+            <button (click)="updateVehicle(vehicle.reg)" class="btn btn-primary">Update</button>
+          </td>
         </tr>
+        }
       </tbody>
     </table>
+    }
+
   </div>
 </div>

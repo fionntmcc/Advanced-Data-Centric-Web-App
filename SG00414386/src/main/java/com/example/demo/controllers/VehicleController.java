@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-
 import com.example.demo.exceptions.MechanicNotFoundException;
 import com.example.demo.exceptions.VehicleException;
 import com.example.demo.exceptions.VehicleNotFoundException;
@@ -28,7 +26,6 @@ import com.example.demo.services.VehicleService;
 import com.example.demo.validations.VehiclePOSTValidation;
 import com.example.demo.views.VehicleViews;
 import com.fasterxml.jackson.annotation.JsonView;
-
 import jakarta.validation.Valid;
 
 @RestController
@@ -39,21 +36,18 @@ public class VehicleController {
     @Autowired
     VehicleService vs;
     
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/all") // GET "/api/vehicle/all"
     @JsonView(VehicleViews.ExtendedPublic.class)
     public Iterable<Vehicle> getAllVehicles() {
         return vs.getAllVehicles(); // Call service to return JSON list.
     }
     
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping // GET "/api/vehicle?make=<carMake>"
     @JsonView(VehicleViews.ExtendedPublic.class)
     public List<Vehicle> getVehiclesByMake(@RequestParam String make) {
         return vs.getVehiclesByMake(make); // Call service to return JSON list.
     }
     
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE) // POST "/api/vehicle"
     public Vehicle addVehicle(@Valid @RequestBody Vehicle v) { // Get vehicle from request body.
         try {
@@ -71,7 +65,6 @@ public class VehicleController {
         }
     }
     
-    @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("/{reg}")
     @JsonView(VehicleViews.Public.class)
     public ResponseEntity<?> updateVehicleMechanic(

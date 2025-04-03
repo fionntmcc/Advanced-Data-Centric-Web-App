@@ -29,4 +29,8 @@ export class VehiclesComponent {
     });
   }
 
+  updateVehicle(reg: String) {
+
+  }
+
 }
