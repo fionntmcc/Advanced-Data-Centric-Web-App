@@ -15,10 +15,17 @@ export class VehiclesComponent {
   // Garage service injection
   private garageService = inject(GarageService);
 
+  // Array to hold vehicle data
+  public vehicles: Vehicle[] = [];
+
   ngOnInit() {
-    // Get vehicle details from service
+    // Get vehicle details from service.
     this.garageService.getAllVehicles().subscribe((data: any) => {
-      console.log('Vehicle Details:', data);
+      // Assign the data to the vehicles array.
+      this.vehicles = data;
+
+      // debug
+      console.log('Vehicle Details:', this.vehicles);
     });
   }
 
