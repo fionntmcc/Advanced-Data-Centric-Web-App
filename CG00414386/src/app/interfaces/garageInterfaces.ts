@@ -1,3 +1,9 @@
+
+/* 
+    Interfaces generated using JSON to TS VSCode extension.
+    Exported for use in componenents and services.
+*/
+
 export interface Vehicle {
   reg: string;
   make: string;

@@ -14,7 +14,7 @@ import { GarageService } from '../../services/garage.service';
 
 export class DetailsComponent {
 
-  // Ticketmaster service
+  // Garage service injection
   private garageService = inject(GarageService);
 
   ngOnInit() {
