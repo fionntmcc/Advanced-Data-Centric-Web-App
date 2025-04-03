@@ -1,1 +1,67 @@
-<p>details works!</p>
+<div class="details-container">
+  <h2>Vehicle Details</h2>
+
+  <div *ngIf="vehicle">
+    <!-- Vehicle information display -->
+    <div class="vehicle-info">
+      <h3>Registration: {{vehicle.reg}}</h3>
+
+      <!-- Vehicle Edit Form -->
+      <form [formGroup]="vehicleForm" (ngSubmit)="onSubmit()" class="vehicle-form">
+        <div>
+          <label for="reg">Reg:</label>
+          <input id="reg" formControlName="reg" />
+        </div>
+
+        <div>
+          <label for="make">Make:</label>
+          <input id="make" formControlName="make" />
+        </div>
+
+        <div>
+          <label for="model">Model:</label>
+          <input id="model" formControlName="model" />
+        </div>
+
+        <div>
+          <label for="mechanicId">Mechanic ID:</label>
+          <input id="mechanicId" formControlName="mechanicId" />
+          
+          <!-- Display current mechanic ID value -->
+          <div class="current-value">
+            Current input: <strong>{{ currentMechanicId }}</strong>
+            <span *ngIf="currentMechanicId !== vehicle.mechanic.mid" class="changed-value">
+              (Changed from: {{ vehicle.mechanic.mid }})
+            </span>
+          </div>
+          
+          <button type="button" (click)="updateMechanic()">Update</button>
+        </div>
+
+        <div>
+          <label for="mechanicName">Mechanic Name:</label>
+          <input id="mechanicName" formControlName="mechanicName" />
+        </div>
+
+        <div>
+          <label for="garageLocation">Garage Location:</label>
+          <input id="garageLocation" formControlName="garageLocation" />
+        </div>
+
+      </form>
+      
+      <!-- Display submission feedback -->
+      <div *ngIf="submitMessage" class="alert" [ngClass]="{'alert-success': submitMessage.includes('successful'), 'alert-danger': submitMessage.includes('Error')}">
+        {{ submitMessage }}
+      </div>
+      
+      <div>
+        <button (click)="goBack()" class="btn btn-secondary">Back</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!vehicle" class="loading">
+    Loading vehicle details...
+  </div>
+</div>
