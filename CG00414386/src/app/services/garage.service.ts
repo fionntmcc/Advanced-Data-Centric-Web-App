@@ -28,14 +28,25 @@ export class GarageService {
     return this.httpClient.get<Vehicle[]>(url);
   }
   
-  // Get a specific event by its ID
+  // Get all vehicles of a specific make.
   getVehiclesByMake(make: string): Observable<any> {
-    // Change to the correct Ticketmaster event details endpoint format
+    // URL with the make parameter.
     const url = `${GARAGE_API_BASE}/vehicle?make=${make}`;
     
     // debug
     console.log('Making API request to:', url);
 
     return this.httpClient.get<any>(url);
+  }
+
+  // Get vehicle by reg.
+  getVehicleByReg(reg: string): Observable<Vehicle> {
+    // URL with the reg parameter.
+    const url = `${GARAGE_API_BASE}/vehicle/one?reg=${reg}`;
+    
+    // debug
+    console.log('Making API request to:', url);
+
+    return this.httpClient.get<Vehicle>(url);
   }
 }

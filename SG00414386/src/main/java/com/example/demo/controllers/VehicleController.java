@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,12 @@ public class VehicleController {
     @JsonView(VehicleViews.ExtendedPublic.class)
     public List<Vehicle> getVehiclesByMake(@RequestParam String make) {
         return vs.getVehiclesByMake(make); // Call service to return JSON list.
+    }
+    
+    @GetMapping("/one") // GET "/api/vehicle?reg=<carReg>"
+    @JsonView(VehicleViews.ExtendedPublic.class)
+    public Optional<Vehicle> getVehicleByReg(@RequestParam String reg) {
+    	return vs.getVehicleByReg(reg); // Call service to return JSON vehicle object.
     }
     
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE) // POST "/api/vehicle"

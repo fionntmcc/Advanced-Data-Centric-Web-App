@@ -30,7 +30,7 @@ export class VehiclesComponent {
   }
 
   updateVehicle(reg: String) {
-
+    window.location.href = `/vehicleDetails/${reg}`;
   }
 
 }
