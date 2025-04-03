@@ -18,6 +18,12 @@ export class DetailsComponent implements OnInit {
   private garageService = inject(GarageService);
   private fb = inject(FormBuilder);
 
+  public isLoading: boolean = true;
+  
+  // Property to store error messages
+  public error: boolean = false;
+  public errorMessage: string = '';
+
   vehicle: Vehicle | null = null;
   vehicleForm!: FormGroup;
   isSubmitting = false;
@@ -38,12 +44,16 @@ export class DetailsComponent implements OnInit {
             this.vehicle = data;
             console.log('Retrieved vehicle details:', this.vehicle);
             this.populateForm(data);
+            this.isLoading = false;
             
             // Initialize the current mechanic ID
             this.currentMechanicId = data.mechanic.mid;
           },
           error => {
             console.error('Error fetching vehicle details:', error);
+            this.error = true;
+            this.errorMessage = 'Unable to load vehicle details. Please try again later. ' + error.message;
+            this.isLoading = false;
           }
         );
       }
@@ -105,6 +115,9 @@ export class DetailsComponent implements OnInit {
             this.isSubmitting = false;
             this.submitMessage = 'Error updating vehicle mechanic';
             console.error('Error updating vehicle:', error);
+            this.error = true;
+            this.isLoading = false;
+            this.errorMessage = 'Unable to update vehicle details. ' + error.message;
           }
         );
     }

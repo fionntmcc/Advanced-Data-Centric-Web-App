@@ -1,11 +1,26 @@
 <div class="vehicles-container">
   <h2>Vehicles</h2>
 
-  <div class="table-responsive">
+  <!-- Loading indicator -->
+  <div *ngIf="isLoading" class="loading-indicator">
+    <span>Loading vehicles...</span>
+  </div>
 
-    @if (vehicles.length === 0) {
+  <!-- Error display -->
+  <div *ngIf="error">
+    <app-error [errorDetails]="error"></app-error>
+  </div>
+
+  <!-- Add this error message display at an appropriate location in your template -->
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Vehicles table -->
+  <div *ngIf="!error" class="table-responsive">
+    @if (vehicles.length === 0 && !isLoading) {
     <div>No vehicles available</div>
-    } @else {
+    } @else if (!isLoading) {
     <table class="vehicles-table">
       <thead>
         <tr>
@@ -34,6 +49,5 @@
       </tbody>
     </table>
     }
-
   </div>
 </div>

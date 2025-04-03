@@ -1,7 +1,19 @@
 <div class="details-container">
   <h2>Vehicle Details</h2>
 
-  <div *ngIf="vehicle">
+  @if (error) {
+  <!-- Error display -->
+  <div class="error-container alert alert-danger">
+    <p>{{ errorMessage }}</p>
+  </div>
+  }
+  @else if (isLoading) {
+  <!-- Loading indicator -->
+  <div class="loading-indicator">
+    <span>Loading vehicle details...</span>
+  </div>
+  } @else if (vehicle) {
+  <div>
     <!-- Vehicle information display -->
     <div class="vehicle-info">
       <h3>Registration: {{vehicle.reg}}</h3>
@@ -26,7 +38,7 @@
         <div>
           <label for="mechanicId">Mechanic ID:</label>
           <input id="mechanicId" formControlName="mechanicId" />
-          
+
           <!-- Display current mechanic ID value -->
           <div class="current-value">
             Current input: <strong>{{ currentMechanicId }}</strong>
@@ -34,7 +46,7 @@
               (Changed from: {{ vehicle.mechanic.mid }})
             </span>
           </div>
-          
+
           <button type="button" (click)="updateMechanic()">Update</button>
         </div>
 
@@ -49,12 +61,13 @@
         </div>
 
       </form>
-      
+
       <!-- Display submission feedback -->
-      <div *ngIf="submitMessage" class="alert" [ngClass]="{'alert-success': submitMessage.includes('successful'), 'alert-danger': submitMessage.includes('Error')}">
+      <div *ngIf="submitMessage" class="alert"
+        [ngClass]="{'alert-success': submitMessage.includes('successful'), 'alert-danger': submitMessage.includes('Error')}">
         {{ submitMessage }}
       </div>
-      
+
       <div>
         <button (click)="goBack()" class="btn btn-secondary">Back</button>
       </div>
@@ -64,4 +77,6 @@
   <div *ngIf="!vehicle" class="loading">
     Loading vehicle details...
   </div>
+
+  }
 </div>
