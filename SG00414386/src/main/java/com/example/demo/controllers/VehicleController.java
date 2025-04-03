@@ -39,19 +39,21 @@ public class VehicleController {
     @Autowired
     VehicleService vs;
     
-    // @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/all") // GET "/api/vehicle/all"
     @JsonView(VehicleViews.ExtendedPublic.class)
     public Iterable<Vehicle> getAllVehicles() {
         return vs.getAllVehicles(); // Call service to return JSON list.
     }
     
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping // GET "/api/vehicle?make=<carMake>"
     @JsonView(VehicleViews.ExtendedPublic.class)
     public List<Vehicle> getVehiclesByMake(@RequestParam String make) {
         return vs.getVehiclesByMake(make); // Call service to return JSON list.
     }
     
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE) // POST "/api/vehicle"
     public Vehicle addVehicle(@Valid @RequestBody Vehicle v) { // Get vehicle from request body.
         try {
@@ -69,6 +71,7 @@ public class VehicleController {
         }
     }
     
+    @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("/{reg}")
     @JsonView(VehicleViews.Public.class)
     public ResponseEntity<?> updateVehicleMechanic(

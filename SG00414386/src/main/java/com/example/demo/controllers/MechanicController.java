@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ public class MechanicController {
     @Autowired
     private MechanicService ms;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping("/{mid}")
     public ResponseEntity<?> deleteMechanic(@PathVariable String mid) {
         try {

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 // Get API URL from environment.ts
-const API_URL = environment.garage_api_url;
+const GARAGE_API_BASE = environment.garage_api_base;
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class GarageService {
 
   // Returns all vehicles
   getAllVehicles(): Observable<any> {
-    let url = `${API_URL}/vehicle/all`;
+    let url = `${GARAGE_API_BASE}/vehicle/all`;
     
     // debug
     console.log('Making API request to:', url);
@@ -30,7 +30,7 @@ export class GarageService {
   // Get a specific event by its ID
   getVehiclesByMake(make: string): Observable<any> {
     // Change to the correct Ticketmaster event details endpoint format
-    const url = `${API_URL}/vehicle?make=${make}`;
+    const url = `${GARAGE_API_BASE}/vehicle?make=${make}`;
     
     // debug
     console.log('Making API request to:', url);
