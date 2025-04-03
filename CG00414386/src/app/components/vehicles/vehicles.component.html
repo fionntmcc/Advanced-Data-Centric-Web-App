@@ -10,7 +10,7 @@
           <th>Model</th>
           <th>Owner</th>
           <th>Mechanic</th>
-          <th>Garage Location</th>
+          <th>Update</th>
         </tr>
       </thead>
       <tbody>
@@ -21,9 +21,9 @@
           <td>{{ vehicle.reg }}</td>
           <td>{{ vehicle.make }}</td>
           <td>{{ vehicle.model }}</td>
-          <td>{{ vehicle.owner.name }} (ID: {{ vehicle.owner.cid }})</td>
-          <td>{{ vehicle.mechanic.name }}</td>
-          <td>{{ vehicle.mechanic.garage.location }}</td>
+          <td>{{ vehicle.owner.cid }}, {{ vehicle.owner.name }}</td>
+          <td>{{ vehicle.mechanic.mid}}, {{ vehicle.mechanic.name }}, {{ vehicle.mechanic.salary }}, {{ vehicle.mechanic.garage.gid }}, {{ vehicle.mechanic.garage.location }} </td>
+          <td></td>
         </tr>
       </tbody>
     </table>
