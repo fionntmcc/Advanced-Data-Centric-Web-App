@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +39,7 @@ public class VehicleController {
     @Autowired
     VehicleService vs;
     
+    // @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/all") // GET "/api/vehicle/all"
     @JsonView(VehicleViews.ExtendedPublic.class)
     public Iterable<Vehicle> getAllVehicles() {
