@@ -1,10 +1,143 @@
-// ...existing code...
+// Modern color palette
+$primary-color: #3f51b5;
+$primary-dark: #303f9f;
+$primary-light: #c5cae9;
+$accent-color: #ff4081;
+$text-primary: #212121;
+$text-secondary: #757575;
+$divider-color: #e0e0e0;
+$background: #f5f7fa;
+$white: #ffffff;
+$error: #f44336;
+$success: #4caf50;
 
-.error-message {
-  color: #d32f2f;
-  background-color: #ffebee;
-  padding: 10px;
-  border-radius: 4px;
-  margin: 10px 0;
-  border-left: 4px solid #d32f2f;
+.error-container {
+    background-color: lighten($error, 38%);
+    border-left: 4px solid $error;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    
+    p {
+      color: darken($error, 10%);
+      margin: 0;
+    }
+  }
+
+.vehicles-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+  color: $text-primary;
+  
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: $primary-color;
+    font-weight: 500;
+    border-bottom: 2px solid $primary-light;
+    padding-bottom: 0.5rem;
+  }
+
+  .table-responsive {
+    background: $white;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    padding: 1.5rem;
+    overflow-x: auto;
+  }
+
+  .vehicles-table {
+    width: 100%;
+    border-collapse: collapse;
+    
+    thead {
+      background-color: $primary-light;
+      
+      tr th {
+        text-align: left;
+        padding: 1rem;
+        font-weight: 500;
+        color: $primary-dark;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        letter-spacing: 0.5px;
+      }
+    }
+    
+    tbody tr {
+      border-bottom: 1px solid $divider-color;
+      transition: background-color 0.2s ease;
+      
+      &:hover {
+        background-color: rgba($primary-light, 0.1);
+      }
+      
+      td {
+        padding: 1rem;
+        color: $text-secondary;
+        
+        &:first-child {
+          color: $text-primary;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+
+  .btn {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    &.btn-primary {
+      background-color: $primary-color;
+      color: $white;
+      
+      &:hover {
+        background-color: $primary-dark;
+        box-shadow: 0 3px 8px rgba($primary-dark, 0.3);
+      }
+    }
+  }
+
+  .error-message {
+    color: $error;
+    background-color: lighten($error, 38%);
+    padding: 1rem;
+    border-radius: 4px;
+    margin: 1rem 0;
+    border-left: 4px solid $error;
+  }
+  
+  // Empty state styling
+  div:empty + div:not(.table-responsive) {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: $text-secondary;
+    font-style: italic;
+    background: rgba($primary-light, 0.1);
+    border-radius: 8px;
+  }
+}
+
+// Media queries for responsiveness
+@media (max-width: 768px) {
+  .vehicles-container {
+    h2 {
+      font-size: 1.75rem;
+    }
+    
+    .vehicles-table {
+      thead tr th,
+      tbody tr td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.9rem;
+      }
+    }
+  }
 }

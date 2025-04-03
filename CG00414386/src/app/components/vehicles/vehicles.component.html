@@ -1,53 +1,45 @@
 <div class="vehicles-container">
   <h2>Vehicles</h2>
 
-  <!-- Loading indicator -->
-  <div *ngIf="isLoading" class="loading-indicator">
-    <span>Loading vehicles...</span>
-  </div>
-
-  <!-- Error display -->
-  <div *ngIf="error">
-    <app-error [errorDetails]="error"></app-error>
-  </div>
-
-  <!-- Add this error message display at an appropriate location in your template -->
-  <div *ngIf="errorMessage" class="error-message">
-    {{ errorMessage }}
-  </div>
-
-  <!-- Vehicles table -->
-  <div *ngIf="!error" class="table-responsive">
-    @if (vehicles.length === 0 && !isLoading) {
-    <div>No vehicles available</div>
-    } @else if (!isLoading) {
-    <table class="vehicles-table">
-      <thead>
-        <tr>
-          <th>Registration</th>
-          <th>Make</th>
-          <th>Model</th>
-          <th>Owner</th>
-          <th>Mechanic</th>
-          <th>Update</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (vehicle of vehicles; track vehicle.reg) {
-        <tr>
-          <td>{{ vehicle.reg }}</td>
-          <td>{{ vehicle.make }}</td>
-          <td>{{ vehicle.model }}</td>
-          <td>{{ vehicle.owner.cid }}, {{ vehicle.owner.name }}</td>
-          <td>{{ vehicle.mechanic.mid}}, {{ vehicle.mechanic.name }}, {{ vehicle.mechanic.salary }}, {{
-            vehicle.mechanic.garage.gid }}, {{ vehicle.mechanic.garage.location }} </td>
-          <td>
-            <button (click)="updateVehicle(vehicle.reg)" class="btn btn-primary">Update</button>
-          </td>
-        </tr>
-        }
-      </tbody>
-    </table>
+  <div class="table-responsive">
+    @if (error) {
+      <div class="error-container">
+        <p>{{ errorMessage }}</p>
+      </div>
+    } @else if (isLoading) {
+      <div class="loading-indicator">
+        <span>Loading vehicles...</span>
+      </div>
+    }@else if (vehicles.length === 0) {
+      <div>No vehicles available</div>
+    } @else {
+      <table class="vehicles-table">
+        <thead>
+          <tr>
+            <th>Registration</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Owner</th>
+            <th>Mechanic</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (vehicle of vehicles; track vehicle.reg) {
+            <tr>
+              <td>{{ vehicle.reg }}</td>
+              <td>{{ vehicle.make }}</td>
+              <td>{{ vehicle.model }}</td>
+              <td>{{ vehicle.owner.cid }}, {{ vehicle.owner.name }}</td>
+              <td>{{ vehicle.mechanic.mid}}, {{ vehicle.mechanic.name }}, {{ vehicle.mechanic.salary }}, {{
+                vehicle.mechanic.garage.gid }}, {{ vehicle.mechanic.garage.location }} </td>
+              <td>
+                <button (click)="updateVehicle(vehicle.reg)" class="btn btn-primary">Update</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
     }
   </div>
 </div>

@@ -34,13 +34,13 @@ export class VehiclesComponent {
         this.isLoading = false;
 
         // debug
-        console.log('Vehicle Details:', this.vehicles);
+        // console.log('Vehicle Details:', this.vehicles);
       },
       error: (error) => {
-        console.error('Error fetching vehicles:', error);
+        // console.error('Error fetching vehicle details:', error);
         this.error = true;
         this.isLoading = false;
-        this.errorMessage = 'Unable to load vehicles. Please try again later.';
+        this.errorMessage = error.message;
         console.log(this.error);
       }
     });

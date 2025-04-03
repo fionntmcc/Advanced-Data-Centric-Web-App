@@ -1,0 +1,215 @@
+// Modern color palette (matching vehicles component)
+$primary-color: #3f51b5;
+$primary-dark: #303f9f;
+$primary-light: #c5cae9;
+$accent-color: #ff4081;
+$text-primary: #212121;
+$text-secondary: #757575;
+$divider-color: #e0e0e0;
+$background: #f5f7fa;
+$white: #ffffff;
+$error: #f44336;
+$success: #4caf50;
+$warning: #ff9800;
+
+.details-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+  color: $text-primary;
+  
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: $primary-color;
+    font-weight: 500;
+    border-bottom: 2px solid $primary-light;
+    padding-bottom: 0.5rem;
+  }
+
+  .error-container {
+    background-color: lighten($error, 38%);
+    border-left: 4px solid $error;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    
+    p {
+      color: darken($error, 10%);
+      margin: 0;
+    }
+  }
+  
+  .loading-indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+    color: $primary-color;
+    font-style: italic;
+    
+    &:before {
+      content: '';
+      width: 1.5rem;
+      height: 1.5rem;
+      border: 2px solid $primary-light;
+      border-top: 2px solid $primary-color;
+      border-radius: 50%;
+      margin-right: 1rem;
+      animation: spin 1s linear infinite;
+    }
+  }
+  
+  .vehicle-info {
+    background: $white;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    padding: 1.5rem;
+    
+    h3 {
+      color: $primary-dark;
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+      font-size: 1.5rem;
+    }
+  }
+  
+  .vehicle-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    
+    div {
+      margin-bottom: 1.25rem;
+      
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: $text-secondary;
+      }
+      
+      input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid $divider-color;
+        border-radius: 4px;
+        font-size: 1rem;
+        transition: all 0.2s ease;
+        
+        &:focus {
+          outline: none;
+          border-color: $primary-color;
+          box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+        }
+      }
+      
+      .current-value {
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        color: $text-secondary;
+        
+        .changed-value {
+          color: $warning;
+          font-style: italic;
+        }
+      }
+      
+      button {
+        background-color: $accent-color;
+        color: $white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 500;
+        margin-top: 0.5rem;
+        transition: all 0.2s ease;
+        
+        &:hover {
+          background-color: darken($accent-color, 10%);
+          box-shadow: 0 3px 8px rgba($accent-color, 0.3);
+        }
+      }
+    }
+  }
+  
+  .alert {
+    padding: 1rem;
+    border-radius: 4px;
+    margin-top: 1.5rem;
+    
+    &.alert-success {
+      background-color: lighten($success, 45%);
+      border-left: 4px solid $success;
+      color: darken($success, 10%);
+    }
+    
+    &.alert-danger {
+      background-color: lighten($error, 38%);
+      border-left: 4px solid $error;
+      color: darken($error, 10%);
+    }
+  }
+  
+  .btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    
+    &.btn-secondary {
+      background-color: #f5f5f5;
+      color: $text-secondary;
+      
+      &:hover {
+        background-color: #e0e0e0;
+      }
+    }
+    
+    &.btn-primary {
+      background-color: $primary-color;
+      color: $white;
+      margin-left: 1rem;
+      
+      &:hover {
+        background-color: $primary-dark;
+        box-shadow: 0 3px 8px rgba($primary-dark, 0.3);
+      }
+    }
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 3rem;
+    color: $text-secondary;
+    font-style: italic;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Media queries for responsiveness
+@media (max-width: 600px) {
+  .details-container {
+    .vehicle-form {
+      grid-template-columns: 1fr;
+    }
+    
+    h2 {
+      font-size: 1.75rem;
+    }
+    
+    .vehicle-info h3 {
+      font-size: 1.3rem;
+    }
+  }
+}

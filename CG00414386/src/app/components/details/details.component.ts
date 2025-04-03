@@ -87,42 +87,7 @@ export class DetailsComponent implements OnInit {
     });
   }
 
-  onSubmit() {
-    if (this.vehicleForm.valid && this.vehicle) {
-      this.isSubmitting = true;
-      const updatedVehicle = {
-        ...this.vehicle,
-        mechanic: {
-          ...this.vehicle.mechanic,
-          mid: this.vehicleForm.get('mechanicId')?.value
-        }
-      };
-
-      // Call service to update vehicle (assumes you have an update method)
-      this.garageService.updateVehicleMechanic(this.vehicle.reg, this.vehicleForm.get('mechanicId')?.value)
-        .subscribe(
-          response => {
-            this.isSubmitting = false;
-            this.submitMessage = 'Vehicle mechanic updated successfully';
-            console.log('Update successful:', response);
-            
-            // Update the local vehicle object to reflect changes
-            if (this.vehicle) {
-              this.vehicle.mechanic.mid = this.vehicleForm.get('mechanicId')?.value;
-            }
-          },
-          error => {
-            this.isSubmitting = false;
-            this.submitMessage = 'Error updating vehicle mechanic';
-            console.error('Error updating vehicle:', error);
-            this.error = true;
-            this.isLoading = false;
-            this.errorMessage = 'Unable to update vehicle details. ' + error.message;
-          }
-        );
-    }
-  }
-
+  
   updateMechanic() {
     // Use the currentMechanicId directly
     console.log('Current Mechanic ID:', this.currentMechanicId);
@@ -149,7 +114,7 @@ export class DetailsComponent implements OnInit {
         },
         error => {
           this.isSubmitting = false;
-          this.submitMessage = 'Error updating vehicle mechanic';
+          this.submitMessage = error.message + ` (Mechanic ${this.currentMechanicId} not found)`;
           console.error('Error updating vehicle:', error);
         }
       );
