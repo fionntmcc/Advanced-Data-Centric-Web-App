@@ -12,6 +12,12 @@ export interface Vehicle {
   mechanic: Mechanic;
 }
 
+export interface VehiclePost {
+  reg: string;
+  make: string;
+  model: string;
+}
+
 export interface Mechanic {
   mid: string;
   name: string;

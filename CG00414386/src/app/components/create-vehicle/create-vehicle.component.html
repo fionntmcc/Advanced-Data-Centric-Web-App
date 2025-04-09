@@ -1,0 +1,42 @@
+<div class="create-vehicle-container">
+    <h2>Add New Vehicle</h2>
+
+    <div *ngIf="submitSuccess" class="alert alert-success">
+        Vehicle created successfully! Redirecting...
+    </div>
+
+    <div *ngIf="submitError" class="alert alert-danger">
+        {{ submitError }}
+    </div>
+
+    <form #vehicleForm="ngForm" (ngSubmit)="createVehicle(vehicleForm)" *ngIf="!submitSuccess">
+        <div class="form-group">
+            <label for="reg">Registration Number*</label>
+            <input type="text" id="reg" name="reg" class="form-control" [(ngModel)]="vehicle.reg" required
+                #regField="ngModel">
+            <div *ngIf="regField.invalid && (regField.dirty || regField.touched)" class="error-message">
+                Registration number is required
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="make">Make</label>
+            <input type="text" id="make" name="make" class="form-control" [(ngModel)]="vehicle.make" required
+                #makeField="ngModel">
+            <div *ngIf="makeField.invalid && (makeField.dirty || makeField.touched)" class="error-message">
+                Make is required
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="model">Model</label>
+            <input type="text" id="model" name="model" class="form-control" [(ngModel)]="vehicle.model" required
+                #modelField="ngModel">
+            <div *ngIf="modelField.invalid && (modelField.dirty || modelField.touched)" class="error-message">
+                Model is required
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="vehicleForm.invalid">Create Vehicle</button>
+    </form>
+</div>

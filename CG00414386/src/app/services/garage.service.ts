@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Vehicle } from '../interfaces/garageInterfaces'
+import { Vehicle, VehiclePost } from '../interfaces/garageInterfaces'
 
 // Get API URL from environment.ts
 const GARAGE_API_BASE = environment.garage_api_base;
@@ -59,5 +59,14 @@ export class GarageService {
     // console.log('Making API PUT request to:', url, 'with body:', body);
 
     return this.httpClient.put<any>(url, body);
+  }
+
+  postVehicle(vehicle: VehiclePost): Observable<any> {
+    const url = `${GARAGE_API_BASE}/vehicle`;
+    
+    // debug
+    console.log('Making API POST request to:', url, 'with body:', vehicle);
+
+    return this.httpClient.post<any>(url, vehicle);
   }
 }
