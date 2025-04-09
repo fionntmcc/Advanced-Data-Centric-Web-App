@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +19,11 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 
 import com.example.demo.DTOs.VehicleDTO;
 import com.example.demo.exceptions.MechanicNotFoundException;
-import com.example.demo.exceptions.VehicleException;
 import com.example.demo.exceptions.VehicleNotFoundException;
 import com.example.demo.models.Vehicle;
 import com.example.demo.services.VehicleService;
@@ -58,19 +59,22 @@ public class VehicleController {
     }
     
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, "application/json;charset=UTF-8"}) // POST "/api/vehicle"
-    public ResponseEntity<?> addVehicle(@Valid @RequestBody VehicleDTO dto) { // Get vehicle from request body.
-        try {
-            // Validation happens automatically here.
-            Vehicle vehicle = vs.createVehicleFromDTO(dto);
+    public ResponseEntity<?> addVehicle(@Valid @RequestBody VehicleDTO dto, BindingResult result) { // Get vehicle from request body.
+    	// Validation happens automatically here.
+    	
+    	if (result.hasErrors()) {
+    		// Return first error message caught during validation.
+    		String errorMessage = result.getFieldErrors().stream()
+    	            .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
+    	            .collect(Collectors.joining(", "));
+    	        return ResponseEntity.badRequest().body(errorMessage);
+    	}
+        
+    	// Create vehicle
+        Vehicle vehicle = vs.createVehicleFromDTO(dto);
             
-            return ResponseEntity.ok(vehicle);
-        } catch (Exception e) {
-            // Catch validation failures.
-            throw new ResponseStatusException(
-                HttpStatus.INTERNAL_SERVER_ERROR, 
-                "Validation failed: " + e.getMessage()
-            );
-        }
+        // Return 400 OK -> vehicle saved to database.
+        return ResponseEntity.ok(vehicle);
     }
     
     @PutMapping("/{reg}")

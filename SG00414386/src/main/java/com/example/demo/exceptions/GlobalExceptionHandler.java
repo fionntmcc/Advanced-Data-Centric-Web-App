@@ -33,11 +33,17 @@ public class GlobalExceptionHandler {
             .body("Validation failed: " + errorMsg);
     }
 
+    /*
+     * The below exception was used when using POST method with standard Vehicle object.
+     * POST refactored to use DTOs, simplifying the error handling, and nullifying the below exception.
+     */
+    /*
     // Handle custom business exceptions (e.g., VehicleException)
     @ExceptionHandler(VehicleException.class)
     public ResponseEntity<String> handleVehicleException(VehicleException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
+    */
 
     // Fallback for other exceptions
     @ExceptionHandler(Exception.class)

@@ -4,12 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-
 import com.example.demo.DTOs.VehicleDTO;
 import com.example.demo.exceptions.MechanicNotFoundException;
-import com.example.demo.exceptions.VehicleException;
 import com.example.demo.exceptions.VehicleNotFoundException;
 import com.example.demo.models.Mechanic;
 import com.example.demo.models.Vehicle;
@@ -30,28 +27,31 @@ public class VehicleService {
     
     @JsonView(VehicleViews.ExtendedPublic.class) // Use JsonView for returning vehicle objects.
     									 // This only returns the fields marked with the @JsonView ExtendedPublic annotation.
+    									 // @JsonManagedReference used to keep track of Serialisation
     									 // @JsonIgnore is used to avoid recursion (i.e. Vehicle -> Customer -> Mechanic
     									 // -> Garage -> Mechanic...)
     public Iterable<Vehicle> getAllVehicles() {
         return vr.findAll();
     }
     
-    @JsonView(VehicleViews.ExtendedPublic.class) // Returns JsonView objects.
-    public Optional<Vehicle> getVehicleByReg(String reg) {
+    @JsonView(VehicleViews.ExtendedPublic.class) // Returns all fields.
+    public Optional<Vehicle> getVehicleByReg(String reg) { // Optional as Vehicle may not exist with given reg.
         return vr.findByReg(reg);
     }
     
-    @JsonView(VehicleViews.ExtendedPublic.class) // Returns JsonView objects.
-    public List<Vehicle> getVehiclesByMake(String make) {
+    @JsonView(VehicleViews.ExtendedPublic.class) // Returns all fields.
+    public List<Vehicle> getVehiclesByMake(String make) { // List for One to Many mapping.
         return vr.findByMake(make);
     }
     
-    @JsonView(VehicleViews.Public.class) // Returns JsonView objects.
-    public List<Vehicle> getVehiclesByMechanicId(String mechanic) {
+    @JsonView(VehicleViews.Public.class) // Returns basic fields.
+    public List<Vehicle> getVehiclesByMechanicId(String mechanic) { // List for One to Many mapping.
         return vr.findByMechanicId(Integer.parseInt(mechanic.substring(1))); // Remove 'M' from the start of mechanic id and parse to Integer.
         																	 // Matches mechanic table to vehicle table.
     }
     
+    // The below save method worked if @JsonManagedReference and JsonBackReference were omitted.
+    // DTO proved easier to implement for POST method -> standard in industry.
     /*
     @JsonView(VehicleViews.Minimal.class) // Only contains reg, make, model.
     public void save(Vehicle v) throws VehicleException { // Save vehicle to database.
@@ -63,7 +63,12 @@ public class VehicleService {
     }
      */
     
+    // Creates a Vehicle from DTO for POST implementation.
     public Vehicle createVehicleFromDTO(VehicleDTO dto) {
+    	if (vr.existsByReg(dto.getReg())) {
+            throw new IllegalArgumentException("A vehicle with this registration already exists");
+        }
+    	
         Vehicle vehicle = new Vehicle();
         vehicle.setMake(dto.getMake());
         vehicle.setModel(dto.getModel());

@@ -1,8 +1,15 @@
 package com.example.demo.DTOs;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class VehicleDTO {
+	@NotBlank(message = "Reg must be provided")
 	private String reg;
+	
+	@NotBlank(message = "Make must be provided")
 	private String make;
+	
+	@NotBlank(message = "Model must be provided")
 	private String model;
 	
 	public String getReg() {
