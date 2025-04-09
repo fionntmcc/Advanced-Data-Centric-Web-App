@@ -30,9 +30,9 @@
               <td>{{ vehicle.reg }}</td>
               <td>{{ vehicle.make }}</td>
               <td>{{ vehicle.model }}</td>
-              <td>{{ vehicle.owner.cid }}, {{ vehicle.owner.name }}</td>
-              <td>{{ vehicle.mechanic.mid}}, {{ vehicle.mechanic.name }}, {{ vehicle.mechanic.salary }}, {{
-                vehicle.mechanic.garage.gid }}, {{ vehicle.mechanic.garage.location }} </td>
+              <td>{{ vehicle.owner?.cid || "Not assigned" }}, {{ vehicle.owner?.name || "Not assigned" }}</td>
+              <td>{{ vehicle.mechanic?.mid || "Not assigned" }}, {{ vehicle.mechanic?.name || "Not assigned" }}, {{ vehicle.mechanic?.salary }}, {{
+                vehicle.mechanic?.garage?.gid || "Not assigned" }}, {{ vehicle.mechanic?.garage?.location || "Not assigned" }} </td>
               <td>
                 <button (click)="updateVehicle(vehicle.reg)" class="btn btn-primary">Update</button>
               </td>
@@ -40,6 +40,8 @@
           }
         </tbody>
       </table>
+
+      <button (click)="createVehicle()" class="btn btn-success">Add New Vehicle</button>
     }
   </div>
 </div>

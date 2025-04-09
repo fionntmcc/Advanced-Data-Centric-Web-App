@@ -1,42 +1,46 @@
-<div class="create-vehicle-container">
-    <h2>Add New Vehicle</h2>
+<div class="create-vehicle-container container mt-4">
+    <h2 class="mb-4">Add New Vehicle</h2>
 
+    <!-- Success -->
     <div *ngIf="submitSuccess" class="alert alert-success">
         Vehicle created successfully! Redirecting...
     </div>
-
+    
+    <!-- Error handling -->
     <div *ngIf="submitError" class="alert alert-danger">
         {{ submitError }}
     </div>
 
-    <form #vehicleForm="ngForm" (ngSubmit)="createVehicle(vehicleForm)" *ngIf="!submitSuccess">
-        <div class="form-group">
-            <label for="reg">Registration Number*</label>
-            <input type="text" id="reg" name="reg" class="form-control" [(ngModel)]="vehicle.reg" required
-                #regField="ngModel">
-            <div *ngIf="regField.invalid && (regField.dirty || regField.touched)" class="error-message">
-                Registration number is required
-            </div>
+    <!-- Form for fields - all necessary fields -->
+    <form #vehicleForm="ngForm" (ngSubmit)="createVehicle(vehicleForm)" *ngIf="!submitSuccess" class="mb-4">
+        <div class="form-group mb-3">
+            <label for="reg" class="form-label">Registration Number*</label>
+            <input type="text" id="reg" name="reg" class="form-control" [(ngModel)]="vehicle.reg" required #reg>
         </div>
 
-        <div class="form-group">
-            <label for="make">Make</label>
+        <div class="form-group mb-3">
+            <label for="make" class="form-label">Make*</label>
             <input type="text" id="make" name="make" class="form-control" [(ngModel)]="vehicle.make" required
                 #makeField="ngModel">
-            <div *ngIf="makeField.invalid && (makeField.dirty || makeField.touched)" class="error-message">
+            <div *ngIf="makeField.invalid && (makeField.dirty || makeField.touched)" class="invalid-feedback d-block">
                 Make is required
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="model">Model</label>
+        <div class="form-group mb-3">
+            <label for="model" class="form-label">Model*</label>
             <input type="text" id="model" name="model" class="form-control" [(ngModel)]="vehicle.model" required
                 #modelField="ngModel">
-            <div *ngIf="modelField.invalid && (modelField.dirty || modelField.touched)" class="error-message">
+            <div *ngIf="modelField.invalid && (modelField.dirty || modelField.touched)" class="invalid-feedback d-block">
                 Model is required
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary" [disabled]="vehicleForm.invalid">Create Vehicle</button>
+        <div class="row mt-4">
+            <div class="col">
+                <button type="submit" class="btn btn-primary" [disabled]="vehicleForm.invalid">Create Vehicle</button>
+                <button (click)="goBack()" type="button" class="btn btn-secondary ms-2">Back</button>
+            </div>
+        </div>
     </form>
 </div>

@@ -38,8 +38,8 @@
           <!-- Display current mechanic ID value -->
           <div class="current-value">
             Current input: <strong>{{ currentMechanicId }}</strong>
-            <span *ngIf="currentMechanicId !== vehicle.mechanic.mid" class="changed-value">
-              (Changed from: {{ vehicle.mechanic.mid }})
+            <span *ngIf="currentMechanicId !== vehicle.mechanic?.mid || ''" class="changed-value">
+              (Changed from: {{ vehicle.mechanic?.mid }})
             </span>
           </div>
 

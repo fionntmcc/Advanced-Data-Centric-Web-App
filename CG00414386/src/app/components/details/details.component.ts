@@ -47,7 +47,7 @@ export class DetailsComponent implements OnInit {
             this.isLoading = false;
             
             // Initialize the current mechanic ID
-            this.currentMechanicId = data.mechanic.mid;
+            this.currentMechanicId = data.mechanic?.mid || '';
           },
           error => {
             console.error('Error fetching vehicle details:', error);
@@ -81,9 +81,9 @@ export class DetailsComponent implements OnInit {
       reg: vehicle.reg,
       make: vehicle.make,
       model: vehicle.model,
-      mechanicId: vehicle.mechanic.mid,
-      mechanicName: vehicle.mechanic.name,
-      garageLocation: vehicle.mechanic.garage.location,
+      mechanicId: vehicle.mechanic?.mid || 'Not assigned',
+      mechanicName: vehicle.mechanic?.name|| 'Not assigned',
+      garageLocation: vehicle.mechanic?.garage?.location || 'Not assigned',
     });
   }
 
@@ -92,7 +92,7 @@ export class DetailsComponent implements OnInit {
     // Use the currentMechanicId directly
     console.log('Current Mechanic ID:', this.currentMechanicId);
     if (!this.currentMechanicId || !this.vehicle) {
-      this.submitMessage = 'Error: Mechanic ID and vehicle registration are required';
+      this.submitMessage = 'Error: Mechanic ID is required';
       return;
     }
     
@@ -108,7 +108,7 @@ export class DetailsComponent implements OnInit {
           console.log('Update successful:', response);
           
           // Update the local vehicle object to reflect changes
-          if (this.vehicle) {
+          if (this.vehicle?.mechanic?.mid) {
             this.vehicle.mechanic.mid = this.currentMechanicId;
           }
         },

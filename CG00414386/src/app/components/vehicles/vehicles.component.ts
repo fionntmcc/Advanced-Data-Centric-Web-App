@@ -50,4 +50,8 @@ export class VehiclesComponent {
     window.location.href = `/vehicleDetails/${reg}`;
   }
 
+  createVehicle() {
+    window.location.href = '/addVehicle';
+  }
+
 }

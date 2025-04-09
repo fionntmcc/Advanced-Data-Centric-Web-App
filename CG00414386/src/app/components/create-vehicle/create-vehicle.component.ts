@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { VehiclePost } from '../../interfaces/garageInterfaces';
@@ -7,7 +7,8 @@ import { GarageService } from '../../services/garage.service';
 
 @Component({
   selector: 'app-create-vehicle',
-  imports: [FormsModule, CommonModule],
+  standalone: true,
+  imports: [FormsModule, CommonModule, RouterModule],
   templateUrl: './create-vehicle.component.html',
   styleUrl: './create-vehicle.component.scss'
 })
@@ -42,13 +43,13 @@ export class CreateVehicleComponent {
       model: this.vehicle.model
     };
 
-    // Call the service to create the vehicle
+    // Call the service to create the vehicle.
     this.garageService.postVehicle(vehicleData).subscribe(
       response => {
         console.log('Vehicle created successfully:', response);
         this.submitting = false;
         this.submitSuccess = true;
-        // Navigate to the vehicles list after a short delay
+        // Navigate to the vehicles list after a delay.
         setTimeout(() => {
           this.router.navigate(['/vehicles']);
         }, 1500);
@@ -59,5 +60,9 @@ export class CreateVehicleComponent {
         this.submitError = 'Failed to create vehicle. Please try again.';
       }
     );
+  }
+
+  goBack() {
+    this.router.navigate(['/vehicles']);
   }
 }
