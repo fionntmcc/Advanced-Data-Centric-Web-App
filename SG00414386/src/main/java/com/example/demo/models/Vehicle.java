@@ -15,7 +15,6 @@ import com.example.demo.validations.VehiclePOSTValidation;
 @Entity
 public class Vehicle {
 	
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -52,7 +51,6 @@ public class Vehicle {
 		super();
 	}
 
-
 	public Vehicle(String reg, String make, String model, Customer owner, Mechanic mechanic) {
 		super();
 		this.reg = reg;
@@ -61,7 +59,6 @@ public class Vehicle {
 		this.owner = owner;
 		this.mechanic = mechanic;
 	}
-
 
 	public Integer getId() {
 		return id;

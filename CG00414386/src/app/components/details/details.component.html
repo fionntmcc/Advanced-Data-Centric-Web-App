@@ -1,16 +1,17 @@
 <div class="details-container">
   <h2>Vehicle Details</h2>
 
+  <!-- Error handling -->
   @if (error) {
     <div class="error-container">
       <p>{{ errorMessage }}</p>
     </div>
-  }
+  } <!-- Loading -->
   @else if (isLoading) {
     <div class="loading-indicator">
       <span>Loading vehicle details...</span>
     </div>
-  } @else if (vehicle) {
+  } @else if (vehicle) { <!-- API GET successful -->
     <div class="vehicle-info">
       <h3>Registration: {{vehicle.reg}}</h3>
 
@@ -67,7 +68,7 @@
         <button (click)="goBack()" class="btn btn-secondary">Back</button>
       </div>
     </div>
-  } @else {
+  } @else { <!-- Loading vehicles -->
     <div class="loading">
       Loading vehicle details...
     </div>

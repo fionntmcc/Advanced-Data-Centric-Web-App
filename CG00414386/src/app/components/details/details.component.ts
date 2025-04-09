@@ -20,25 +20,27 @@ export class DetailsComponent implements OnInit {
 
   public isLoading: boolean = true;
   
-  // Property to store error messages
+  // Store error state and message.
   public error: boolean = false;
   public errorMessage: string = '';
 
+  // Store vehicle details.
   vehicle: Vehicle | null = null;
   vehicleForm!: FormGroup;
   isSubmitting = false;
   submitMessage = '';
   currentMechanicId: string = '';
-
+  
+  // Init on view enter.
   ngOnInit() {
-    // Initialize form
+    // Initialise form.
     this.initForm();
     
-    // Get the registration parameter from the route
+    // Get the registration parameter from the route.
     this.route.paramMap.subscribe(params => {
       const reg = params.get('reg');
       if (reg) {
-        // Use the registration to fetch vehicle details
+        // Use the registration to fetch vehicle details.
         this.garageService.getVehicleByReg(reg).subscribe(
           (data: Vehicle) => {
             this.vehicle = data;
@@ -46,10 +48,12 @@ export class DetailsComponent implements OnInit {
             this.populateForm(data);
             this.isLoading = false;
             
-            // Initialize the current mechanic ID
+            // Initialize the current mechanic ID.
             this.currentMechanicId = data.mechanic?.mid || '';
           },
+          // Error loading vehicle details.
           error => {
+            // Set error and message.
             console.error('Error fetching vehicle details:', error);
             this.error = true;
             this.errorMessage = 'Unable to load vehicle details. Please try again later. ' + error.message;
@@ -60,6 +64,7 @@ export class DetailsComponent implements OnInit {
     });
   }
 
+  // Initialize the form with empty strings, disable all fields except mid.
   initForm() {
     this.vehicleForm = this.fb.group({
       reg: [{value: '', disabled: true}],
@@ -70,24 +75,26 @@ export class DetailsComponent implements OnInit {
       garageLocation: [{value: '', disabled: true}],
     });
     
-    // Subscribe to changes in the mechanicId field
+    // Subscribe to changes in the mid field.
     this.vehicleForm.get('mechanicId')?.valueChanges.subscribe(value => {
       this.currentMechanicId = value;
     });
   }
 
+  // Populate the form with vehicle details once fetched.
   populateForm(vehicle: Vehicle) {
     this.vehicleForm.patchValue({
       reg: vehicle.reg,
       make: vehicle.make,
       model: vehicle.model,
+      // May be undefined,
+      // if so, set to 'Not assigned'.
       mechanicId: vehicle.mechanic?.mid || 'Not assigned',
       mechanicName: vehicle.mechanic?.name|| 'Not assigned',
       garageLocation: vehicle.mechanic?.garage?.location || 'Not assigned',
     });
   }
 
-  
   updateMechanic() {
     // Use the currentMechanicId directly
     console.log('Current Mechanic ID:', this.currentMechanicId);
@@ -99,19 +106,21 @@ export class DetailsComponent implements OnInit {
     this.isSubmitting = true;
     this.submitMessage = '';
     
-    // Call service to update vehicle mechanic
+    // Call service to update vehicle mechanic.
     this.garageService.updateVehicleMechanic(this.vehicle.reg, this.currentMechanicId)
       .subscribe(
         response => {
+          // Successful response.
           this.isSubmitting = false;
           this.submitMessage = 'Vehicle mechanic updated successfully';
           console.log('Update successful:', response);
           
-          // Update the local vehicle object to reflect changes
+          // Update mid to match API response. 
           if (this.vehicle?.mechanic?.mid) {
             this.vehicle.mechanic.mid = this.currentMechanicId;
           }
         },
+        // Handle error.
         error => {
           this.isSubmitting = false;
           this.submitMessage = error.message + ` (Mechanic ${this.currentMechanicId} not found)`;
@@ -120,6 +129,7 @@ export class DetailsComponent implements OnInit {
       );
   }
 
+  // Back button handler.
   goBack() {
     this.router.navigate(['/vehicles']);
   }

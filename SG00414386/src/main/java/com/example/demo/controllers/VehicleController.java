@@ -81,7 +81,7 @@ public class VehicleController {
     @JsonView(VehicleViews.Public.class)
     public ResponseEntity<?> updateVehicleMechanic(
         @PathVariable String reg,
-        @RequestBody Map<String, Object> requestBody) {  // Use Map to inspect raw JSON
+        @RequestBody Map<String, Object> requestBody) {  // Use Map to inspect raw JSON.
         
         // Check for disallowed attributes
         Set<String> disallowed = Set.of("id", "name", "salary", "garage", "vehicles");
@@ -94,7 +94,7 @@ public class VehicleController {
             }
         }
 
-        // Validate required 'mid' field
+        // Validate required mid field.
         if (!requestBody.containsKey("mid")) {
             throw new ResponseStatusException(
                 HttpStatus.BAD_REQUEST,
@@ -103,12 +103,13 @@ public class VehicleController {
         }
 
         try {
+        	// Get mid from JSON, and try to update vehicle mid.
             String mid = requestBody.get("mid").toString();
             Vehicle updatedVehicle = vs.updateMechanic(reg, mid);
             return ResponseEntity.ok(updatedVehicle);
-        } catch (VehicleNotFoundException e) {
+        } catch (VehicleNotFoundException e) { // Not found.
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        } catch (MechanicNotFoundException e) {
+        } catch (MechanicNotFoundException e) { // Bad request: Vehicle found but mechanic not found.
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }

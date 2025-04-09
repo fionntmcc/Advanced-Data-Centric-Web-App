@@ -12,14 +12,14 @@ import { Vehicle } from '../../interfaces/garageInterfaces';
 })
 export class VehiclesComponent {
 
-  // Garage service injection
+  // Garage service injection.
   private garageService = inject(GarageService);
 
-  // Array to hold vehicle data
+  // Array to hold vehicle data.
   public vehicles: Vehicle[] = [];
   public isLoading: boolean = true;
   
-  // Property to store error messages
+  // Property to store error messages.
   public error: boolean = false;
   public errorMessage: string = '';
 
@@ -36,8 +36,9 @@ export class VehiclesComponent {
         // debug
         // console.log('Vehicle Details:', this.vehicles);
       },
+      // Handle error
       error: (error) => {
-        // console.error('Error fetching vehicle details:', error);
+        console.error('Error fetching vehicle details:', error);
         this.error = true;
         this.isLoading = false;
         this.errorMessage = error.message;
@@ -46,10 +47,12 @@ export class VehiclesComponent {
     });
   }
 
+  // Route to details page for vehicle with given reg.
   updateVehicle(reg: String) {
     window.location.href = `/vehicleDetails/${reg}`;
   }
 
+  // Route to create vehicle page.
   createVehicle() {
     window.location.href = '/addVehicle';
   }

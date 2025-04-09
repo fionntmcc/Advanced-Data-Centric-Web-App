@@ -13,22 +13,26 @@ import { GarageService } from '../../services/garage.service';
   styleUrl: './create-vehicle.component.scss'
 })
 export class CreateVehicleComponent {
+
+  // No ngOnInit necessary, no data fetched on init.
+
+  // Instantiate a vehicle object with default values.
+  // This is bound to form inputs.
   vehicle: VehiclePost = {
     reg: '',
     make: '',
     model: ''
   };
   
-  submitting = false;
-  submitError: string | null = null;
-  submitSuccess = false;
+  public submitting = false;
+  public submitError: string | null = null;
+  public submitSuccess = false;
 
+  // Inject the GarageService for API calls.
   private garageService = inject(GarageService);
   private router = inject(Router);
 
-  ngOnInit(): void {
-  }
-
+  // Form submission handler.
   createVehicle(form: any) {
     if (form.invalid) {
       return;
@@ -37,13 +41,14 @@ export class CreateVehicleComponent {
     this.submitting = true;
     this.submitError = null;
     
+    // Prepare the vehicle data for submission.
     const vehicleData: VehiclePost = {
       reg: this.vehicle.reg,
       make: this.vehicle.make,
       model: this.vehicle.model
     };
 
-    // Call the service to create the vehicle.
+    // Call the service POST method.
     this.garageService.postVehicle(vehicleData).subscribe(
       response => {
         console.log('Vehicle created successfully:', response);
@@ -62,6 +67,7 @@ export class CreateVehicleComponent {
     );
   }
 
+  // Back button handler.
   goBack() {
     this.router.navigate(['/vehicles']);
   }

@@ -21,17 +21,17 @@ public class MechanicController {
 
     @DeleteMapping("/{mid}")
     public ResponseEntity<?> deleteMechanic(@PathVariable String mid) {
-        try {
+        try { // Try to delete mechanic.
             ms.deleteMechanic(mid);
             return ResponseEntity.ok().build();
-        } catch (MechanicNotFoundException e) {
+        } catch (MechanicNotFoundException e) { // Not found.
             throw new ResponseStatusException(
-                HttpStatus.INTERNAL_SERVER_ERROR, 
+                HttpStatus.NOT_FOUND, 
                 e.getMessage()
             );
-        } catch (MechanicInServiceException e) {
+        } catch (MechanicInServiceException e) { // Bad request: Mechanic is associated with vehicle/s.
             throw new ResponseStatusException(
-                HttpStatus.INTERNAL_SERVER_ERROR, 
+                HttpStatus.BAD_REQUEST, 
                 e.getMessage()
             );
         }

@@ -24,8 +24,9 @@ public class MechanicService {
     @Autowired
     private VehicleRepository vr;
 
+    // Delete mechanic by mid.
     public void deleteMechanic(String mid) {
-        // Check if mechanic exists
+        // Check if mechanic exists.
         Mechanic mechanic = mr.findByMid(mid)
             .orElseThrow(() -> new MechanicNotFoundException("Mechanic with mid " + mid + " not found"));
 
@@ -35,7 +36,7 @@ public class MechanicService {
             throw new MechanicInServiceException("Mechanic is currently servicing " + vehicles.size() + " vehicles");
         }
 
-        // Delete the mechanic
+        // Delete mechanic.
         mr.delete(mechanic);
     }
 }

@@ -21,7 +21,7 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Integer> {
     @EntityGraph(attributePaths = {"owner", "mechanic", "mechanic.garage"})
     List<Vehicle> findByMechanicId(int mechanic);
     
- // Checks if vehicle with reg exists before post.
+ // Checks if vehicle with reg exists before POST.
     boolean existsByReg(String reg);
 
 }
