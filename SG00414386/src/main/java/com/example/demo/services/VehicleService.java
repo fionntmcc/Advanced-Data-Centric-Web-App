@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.DTOs.VehicleDTO;
 import com.example.demo.exceptions.MechanicNotFoundException;
 import com.example.demo.exceptions.VehicleException;
 import com.example.demo.exceptions.VehicleNotFoundException;
@@ -28,7 +29,7 @@ public class VehicleService {
     private MechanicRepository mr;
     
     @JsonView(VehicleViews.ExtendedPublic.class) // Use JsonView for returning vehicle objects.
-    									 // This only returns the fields marked with the @JsonView annotation.
+    									 // This only returns the fields marked with the @JsonView ExtendedPublic annotation.
     									 // @JsonIgnore is used to avoid recursion (i.e. Vehicle -> Customer -> Mechanic
     									 // -> Garage -> Mechanic...)
     public Iterable<Vehicle> getAllVehicles() {
@@ -51,12 +52,24 @@ public class VehicleService {
         																	 // Matches mechanic table to vehicle table.
     }
     
+    /*
+    @JsonView(VehicleViews.Minimal.class) // Only contains reg, make, model.
     public void save(Vehicle v) throws VehicleException { // Save vehicle to database.
     	 try {
     	 vr.save(v);
     	 } catch (DataIntegrityViolationException ex) {
     	 throw new VehicleException("Vehicle " + v.getReg() + " already exists"); // For correct HttpResponseStatus and Message.
     	 }
+    }
+     */
+    
+    public Vehicle createVehicleFromDTO(VehicleDTO dto) {
+        Vehicle vehicle = new Vehicle();
+        vehicle.setMake(dto.getMake());
+        vehicle.setModel(dto.getModel());
+        vehicle.setReg(dto.getReg());
+
+        return vr.save(vehicle);
     }
     
     @Transactional // PUT method is atomic. All or nothing.

@@ -19,6 +19,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+
+import com.example.demo.DTOs.VehicleDTO;
 import com.example.demo.exceptions.MechanicNotFoundException;
 import com.example.demo.exceptions.VehicleException;
 import com.example.demo.exceptions.VehicleNotFoundException;
@@ -49,20 +51,19 @@ public class VehicleController {
         return vs.getVehiclesByMake(make); // Call service to return JSON list.
     }
     
-    @GetMapping("/one") // GET "/api/vehicle?reg=<carReg>"
+    @GetMapping("/one") // GET "/api/vehicle/one?reg=<carReg>"
     @JsonView(VehicleViews.ExtendedPublic.class)
     public Optional<Vehicle> getVehicleByReg(@RequestParam String reg) {
     	return vs.getVehicleByReg(reg); // Call service to return JSON vehicle object.
     }
     
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE) // POST "/api/vehicle"
-    public Vehicle addVehicle(@Valid @RequestBody Vehicle v) { // Get vehicle from request body.
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, "application/json;charset=UTF-8"}) // POST "/api/vehicle"
+    public ResponseEntity<?> addVehicle(@Valid @RequestBody VehicleDTO dto) { // Get vehicle from request body.
         try {
             // Validation happens automatically here.
-            vs.save(v);
-            return v;
-        } catch (VehicleException vx) { // Handle duplicate reg or missing field.
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, vx.getMessage());
+            Vehicle vehicle = vs.createVehicleFromDTO(dto);
+            
+            return ResponseEntity.ok(vehicle);
         } catch (Exception e) {
             // Catch validation failures.
             throw new ResponseStatusException(
